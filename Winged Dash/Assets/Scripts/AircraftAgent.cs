@@ -1,11 +1,14 @@
 using System;
+using System.Collections;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
+using Unity.MLAgents.Sensors;
 using UnityEngine;
 
 namespace Aircraft
 {
     /// <summary>
+    /// 9 Observations (3 vectors in local space): aircraft velocity, direction to next checkpoint, next checkpoint forward (orientation)  
     /// 3 Actions: pitchChange, yawChange, boost
     /// </summary>
     public class AircraftAgent : Agent
@@ -27,9 +30,9 @@ namespace Aircraft
         [Tooltip("Number of steps to time out after in training")] [SerializeField] private int _stepTimeout = 300;     // if the agent does 300 steps (updates), and it hasn't  made it to the next checkpoint: reset it (for a better training)
         private float _nextStepTimeOut;
         private bool _frozen;       // whether the aircraft is frozen (intentionally not flying): when paused, or crashed or the at beginning of the race
-        
 
-        public int NextCheckpointIndex { get; set; }
+
+        public int NextCheckpointIndex { get; set; } = 1;
 
         // Controls
         private float _pitchChange;         // 0, 1 or -1
@@ -50,7 +53,9 @@ namespace Aircraft
     #endregion
 
 
-        public override void Initialize()
+    #region MLAGENT METHODS
+
+    public override void Initialize()
         {
             _area = GetComponentInParent<AircraftArea>();
             _rb = GetComponent<Rigidbody>();
@@ -76,6 +81,15 @@ namespace Aircraft
             }
         }
 
+        public override void CollectObservations(VectorSensor sensor)
+        {
+            sensor.AddObservation(transform.InverseTransformDirection(_rb.velocity));       // aircraft velocity
+            sensor.AddObservation(VectorToNextCheckpoint());        // Where is the next checkpoint
+
+            Vector3 nextCheckpointForward = _area.Checkpoints[NextCheckpointIndex].forward;     // Next checkpoint orientation
+            sensor.AddObservation(transform.InverseTransformDirection(nextCheckpointForward));
+        }
+
         // Works only if not frozen
         public override void OnActionReceived(ActionBuffers actions)
         {
@@ -93,8 +107,7 @@ namespace Aircraft
             _trail.emitting = _boost;
             
             ProcessMovement();
-
-
+            
             if (_area._trainingMode)
             {
                 // Small negative reward every step to accelerate training
@@ -113,16 +126,24 @@ namespace Aircraft
                 {
                     GotCheckpoint();        
                 }
-
             }
         }
-        
-        
+
+        // Prevent using Heuristic behaviour in AircraftAgent
+        public override void Heuristic(in ActionBuffers actionsOut)
+        {
+            Debug.LogError($"Heuristic() was called on {gameObject.name}. " +
+                           "Make sure only the AircraftPlayer is set to Behaviour Type: Heuristic Only.");
+        }
+
+        #endregion
+
+    
         // Called to get the distance between the agent & the next checkpoint
         private Vector3 VectorToNextCheckpoint()
         {
             var nextCheckpointDir = _area.Checkpoints[NextCheckpointIndex].position - transform.position;
-            var localCheckpointDir = transform.InverseTransformDirection(nextCheckpointDir);        // get the local direction
+            var localCheckpointDir = transform.InverseTransformDirection(nextCheckpointDir);        // get the local direction (this return is used as observation as well)
             return localCheckpointDir;
         }
 
@@ -196,10 +217,45 @@ namespace Aircraft
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Checkpoint") && other.gameObject == _area.Checkpoints[NextCheckpointIndex])
+            if (other.CompareTag("Checkpoint") && other.transform == _area.Checkpoints[NextCheckpointIndex])
             {
                 GotCheckpoint();
             }
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (!collision.gameObject.CompareTag("Agent"))
+            {
+                if (_area._trainingMode)
+                {
+                    AddReward(-1f);
+                    EndEpisode();
+                }
+                else
+                {
+                    StartCoroutine(ExplosionReset());
+                }
+            }
+        }
+
+
+        // Resets the aircraft to the most recent completed checkpoint
+        private IEnumerator ExplosionReset()
+        {
+            FreezeAgent();
+            
+            _meshObject.SetActive(false);
+            _explosionEffect.SetActive(true);
+            
+            yield return new WaitForSeconds(2f);    
+            _meshObject.SetActive(true);
+            _explosionEffect.SetActive(false);
+            _area.ResetAgentPosition(agent:this);
+
+            yield return new WaitForSeconds(1f);
+            
+            ThawAgent();
         }
     }
 }

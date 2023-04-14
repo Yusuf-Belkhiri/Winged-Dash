@@ -2672,6 +2672,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AirplanePlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 3082608588709607318, guid: 8780f43e2d7b4864e861e0310f7817ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8780f43e2d7b4864e861e0310f7817ce, type: 3}
 --- !u!1 &1968268711
@@ -2990,6 +2995,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: AirplaneLearning
+      objectReference: {fileID: 0}
+    - target: {fileID: 3082608588709607318, guid: 34e877bc2925e3e49974155935a29be6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34e877bc2925e3e49974155935a29be6, type: 3}
