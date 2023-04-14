@@ -17,6 +17,12 @@ namespace Aircraft
         [SerializeField] private float _yawSpeed = 100f;       // to rotate around y axis 
         [SerializeField] private float _rollSpeed= 100f;       // to rotate around z axis 
         [SerializeField] private float _boostMultiplier = 2f;   // extra force when the airplane is boosting
+
+        [Header("Explosion")]
+        [SerializeField] private GameObject _explosionEffect;
+        [SerializeField] private GameObject _meshObject;     // the child mesh object to destroy when exploding
+
+        
         public int NextCheckpointIndex { get; set; }
 
         // Controls
@@ -67,7 +73,7 @@ namespace Aircraft
         {
             // Move forward
             var boostModifier = _boost ? _boostMultiplier : 1f;
-            _rb.AddForce(Vector3.forward * _thrust * boostModifier, ForceMode.Force); 
+            _rb.AddForce(transform.forward * _thrust * boostModifier, ForceMode.Force); 
             
             // Rotations 
             Vector3 currentRot = transform.rotation.eulerAngles;        // to use clamp below (the use of:transform.rotation = instead of transform.Rotate()) 
