@@ -1,3 +1,4 @@
+using System;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using UnityEngine;
@@ -20,9 +21,14 @@ namespace Aircraft
 
         [Header("Explosion")]
         [SerializeField] private GameObject _explosionEffect;
-        [SerializeField] private GameObject _meshObject;     // the child mesh object to destroy when exploding
+        [SerializeField] private GameObject _meshObject;     // the child mesh object that will disappear on explosion
 
+        [Header("Training")] 
+        [Tooltip("Number of steps to time out after in training")] [SerializeField] private int _stepTimeout = 300;     // if the agent does 300 steps (updates), and it hasn't  made it to the next checkpoint: reset it (for a better training)
+        private float _nextStepTimeOut;
+        private bool _frozen;       // whether the aircraft is frozen (intentionally not flying): when paused, or crashed or the at beginning of the race
         
+
         public int NextCheckpointIndex { get; set; }
 
         // Controls
@@ -49,11 +55,32 @@ namespace Aircraft
             _area = GetComponentInParent<AircraftArea>();
             _rb = GetComponent<Rigidbody>();
             _trail = GetComponent<TrailRenderer>();
+
+            // Override max step: 5000 if training, infinite if racing
+            MaxStep = _area._trainingMode ? 5000 : 0;
         }
-        
-        
+
+
+        public override void OnEpisodeBegin()
+        {
+            // Reset the velocity, orientation, trial and position
+            _rb.velocity = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero;
+            _trail.emitting = false;
+            _area.ResetAgentPosition(this, _area._trainingMode); 
+
+            // Update the next step timeout
+            if (_area._trainingMode)
+            {
+                _nextStepTimeOut = StepCount + _stepTimeout;
+            }
+        }
+
+        // Works only if not frozen
         public override void OnActionReceived(ActionBuffers actions)
         {
+            if (_frozen) return;
+
             _pitchChange = actions.DiscreteActions[0];      // 0: don't move,   1: move up,     2: move down (-1)
             if (_pitchChange == 2) _pitchChange = -1f;
 
@@ -66,7 +93,68 @@ namespace Aircraft
             _trail.emitting = _boost;
             
             ProcessMovement();
+
+
+            if (_area._trainingMode)
+            {
+                // Small negative reward every step to accelerate training
+                AddReward(-1f / MaxStep);
+
+                if (StepCount > _nextStepTimeOut)
+                {
+                    AddReward(-0.5f); 
+                    EndEpisode();
+                }
+
+                // Curriculum learning, check if the agent is within a certain radius of the next checkpoint, the checkpoint_radius will start at 50m, 
+                // once it's good at getting within 50m of the next checkpoint, then we gonna lower to 30m, and then 20m..and then it will need to fly through the checkpoint (make it more challenging each time)  
+                Vector3 localCheckpointDir = VectorToNextCheckpoint();
+                if (localCheckpointDir.magnitude < Academy.Instance.EnvironmentParameters.GetWithDefault("checkpoint_radius", 0f))
+                {
+                    GotCheckpoint();        
+                }
+
+            }
         }
+        
+        
+        // Called to get the distance between the agent & the next checkpoint
+        private Vector3 VectorToNextCheckpoint()
+        {
+            var nextCheckpointDir = _area.Checkpoints[NextCheckpointIndex].position - transform.position;
+            var localCheckpointDir = transform.InverseTransformDirection(nextCheckpointDir);        // get the local direction
+            return localCheckpointDir;
+        }
+
+        // Called to target a new checkpoint 
+        private void GotCheckpoint()
+        {
+            NextCheckpointIndex = (NextCheckpointIndex + 1) % _area.Checkpoints.Count;
+
+            if (_area._trainingMode)
+            {
+                AddReward(.5f);
+                _nextStepTimeOut = StepCount + _stepTimeout;
+            }
+        }
+
+        // Prevent the agent from moving and taking actions
+        private void FreezeAgent()
+        {
+            Debug.Assert(!_area._trainingMode, "Freeze/Thaw is not supported in training");
+            _frozen = true;
+            _rb.Sleep();
+            _trail.emitting = false;
+        }
+
+        // != FreezeAgent, Resume the agent movement and actions 
+        private void ThawAgent()
+        {
+            Debug.Assert(!_area._trainingMode, "Freeze/Thraw is not supported in training");
+            _frozen = false;
+            _rb.WakeUp();
+        }
+        
 
         // Calculate & apply movement
         private void ProcessMovement()
@@ -104,6 +192,14 @@ namespace Aircraft
             
             transform.rotation = Quaternion.Euler(pitch, yaw, roll);
         }
+
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Checkpoint") && other.gameObject == _area.Checkpoints[NextCheckpointIndex])
+            {
+                GotCheckpoint();
+            }
+        }
     }
-    
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
@@ -14,7 +13,7 @@ namespace Aircraft
         [Tooltip("The path the race will take")] [SerializeField] private CinemachineSmoothPath _racePath;
         [SerializeField] private Transform _checkpointPrefab;
         [SerializeField] private Transform _finishCheckpointPrefab;
-        [SerializeField] private bool _trainingMode;        // To change the state, if true: enable training mode
+        public bool _trainingMode;        // To change the state, if true: enable training mode
             
         public List<AircraftAgent> AircraftAgents { get; private set; }
         public List<Transform> Checkpoints { get; private set; }
@@ -50,7 +49,7 @@ namespace Aircraft
         }
 
         // Reset the given aircraft agent to its previous checkpoint pos, unless if randomize: pick a random NextCheckpoint => random previousCheckpoint
-        private void ResetAgent(AircraftAgent agent, bool randomize = false)
+        public void ResetAgentPosition(AircraftAgent agent, bool randomize = false)
         {
             // Get the previous checkpoint index
             if (randomize)
