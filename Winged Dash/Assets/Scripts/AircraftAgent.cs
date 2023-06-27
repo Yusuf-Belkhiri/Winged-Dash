@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;

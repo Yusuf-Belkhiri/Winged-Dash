@@ -13,7 +13,7 @@ pyvenv.cfg
 pip-selfcheck.jsons
 
 # Mine
-*/venv
+*/venv 
 
 
 /[Ll]ibrary/
@@ -30,6 +30,10 @@ pip-selfcheck.jsons
 
 [Ll]ocal[Cc]ache/
 [Uu]nityGenerated/
+
+# (Python virtual environment)
+venv/
+.mypy_cache/
 
 # Environemnt logfile
 *Project.log
@@ -89,3 +93,8 @@ pip-selfcheck.jsons
 *.vscode/
 
 .DS_Store
+
+
+
+
+
