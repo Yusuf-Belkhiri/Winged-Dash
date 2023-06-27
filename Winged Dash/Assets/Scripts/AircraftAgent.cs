@@ -124,6 +124,7 @@ namespace Aircraft
                 Vector3 localCheckpointDir = VectorToNextCheckpoint();
                 if (localCheckpointDir.magnitude < Academy.Instance.EnvironmentParameters.GetWithDefault("checkpoint_radius", 0f))
                 {
+                    print("Smaller distance than: " + Academy.Instance.EnvironmentParameters.GetWithDefault("checkpoint_radius", 0f));
                     GotCheckpoint();        
                 }
             }
@@ -154,7 +155,7 @@ namespace Aircraft
 
             if (_area._trainingMode)
             {
-                AddReward(.5f);
+                AddReward(1f);      // 0.5f
                 _nextStepTimeOut = StepCount + _stepTimeout;
             }
         }

@@ -17,6 +17,7 @@ namespace Aircraft
             
         public List<AircraftAgent> AircraftAgents { get; private set; }
         public List<Transform> Checkpoints { get; private set; }
+
     #endregion
         
 
@@ -53,7 +54,7 @@ namespace Aircraft
         {
             // Get the previous checkpoint index
             if (randomize)
-                agent.NextCheckpointIndex = Random.Range(0, Checkpoints.Count) + 1;     // +1 because of the next -1 op
+                agent.NextCheckpointIndex = Random.Range(1, Checkpoints.Count);     // +1 because of the next -1 op
             int previousCheckPointIndex = agent.NextCheckpointIndex - 1;
 
             // Get the start position & rotation of the previous checkpoint in the world space
@@ -67,7 +68,7 @@ namespace Aircraft
             Vector3 worldSpaceStartPos = _racePath.EvaluatePosition(pathStartPos);      // the corresponding world position (convert the pos of the race path to a pos on 3d space)
             Quaternion worldSpaceOrientation = _racePath.EvaluateOrientation(pathStartPos);
 
-            float horizontalPosOffset = (AircraftAgents.IndexOf(agent) - AircraftAgents.Count / 2) * Random.Range(9, 10);      // Random.Range(9, 10) is used to avoid repeating the same position in RL training 
+            float horizontalPosOffset = (AircraftAgents.IndexOf(agent) - AircraftAgents.Count / 2) * Random.Range(8, 11);      // Random.Range(9, 10) is used to avoid repeating the same position in RL training 
 
             agent.transform.position =
                 worldSpaceStartPos + worldSpaceOrientation * (horizontalPosOffset * Vector3.right);

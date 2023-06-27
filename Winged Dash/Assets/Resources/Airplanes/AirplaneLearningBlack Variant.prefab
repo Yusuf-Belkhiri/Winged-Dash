@@ -75,7 +75,12 @@ PrefabInstance:
     - target: {fileID: 3082608588709607318, guid: 34e877bc2925e3e49974155935a29be6,
         type: 3}
       propertyPath: m_Name
-      value: AirplaneLearningBlack
+      value: AirplaneLearningBlack Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677083447102926629, guid: 34e877bc2925e3e49974155935a29be6,
+        type: 3}
+      propertyPath: _thrust
+      value: 100000
       objectReference: {fileID: 0}
     - target: {fileID: 8288229428212361934, guid: 34e877bc2925e3e49974155935a29be6,
         type: 3}
