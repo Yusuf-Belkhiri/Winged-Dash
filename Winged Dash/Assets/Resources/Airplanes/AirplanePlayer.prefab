@@ -315,7 +315,7 @@ MonoBehaviour:
   _thrust: 100000
   _pitchSpeed: 100
   _yawSpeed: 100
-  _rollSpeed: 100
+  _rollSpeed: 500
   _boostMultiplier: 2
   _explosionEffect: {fileID: 8213180765139573511}
   _meshObject: {fileID: 3240569805045882029}

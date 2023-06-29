@@ -1,4 +1,3 @@
-using System;
 using Aircraft;
 using Unity.MLAgents.Actuators;
 using UnityEngine;

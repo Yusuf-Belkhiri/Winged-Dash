@@ -5,7 +5,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638170174597533380
+      ticks: 638236439636370273
     m_Hash: 2160870878
   m_LockFileStatus:
     m_FilePath: D:/UnityProjects/3D/Winged-Dash/Winged Dash/Packages/packages-lock.json
@@ -13,7 +13,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638170174597586483
+      ticks: 638236439636429239
     m_Hash: 629317443
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
@@ -110,8 +110,12 @@ m_ResolvedPackages:
     - 2.9.2
     - 2.9.4
     - 2.9.5
+    - 2.9.7
     - 3.0.0-pre.3
     - 3.0.0-pre.4
+    - 3.0.0-pre.5
+    - 3.0.0-pre.6
+    - 3.0.0-pre.7
     compatible:
     - 2.8.9
     - 2.9.0-pre.1
@@ -120,6 +124,7 @@ m_ResolvedPackages:
     - 2.9.2
     - 2.9.4
     - 2.9.5
+    - 2.9.7
     verified: 2.8.9
   dependencies:
   - name: com.unity.test-framework
@@ -262,6 +267,8 @@ m_ResolvedPackages:
     - 2.0.0
     - 2.0.1
     - 2.0.3
+    - 2.0.4
+    - 2.0.5
     - 2.1.0-preview.3
     - 2.1.0-preview.5
     - 2.1.0-preview.6
@@ -269,10 +276,12 @@ m_ResolvedPackages:
     - 2.0.0
     - 2.0.1
     - 2.0.3
+    - 2.0.4
+    - 2.0.5
     - 2.1.0-preview.3
     - 2.1.0-preview.5
     - 2.1.0-preview.6
-    verified: 2.0.3
+    verified: 2.0.5
   dependencies: []
   resolvedDependencies: []
   keywords:
@@ -366,9 +375,17 @@ m_ResolvedPackages:
     - 3.0.16
     - 3.0.17
     - 3.0.18
+    - 3.0.20
+    - 3.0.21
+    - 3.0.22
+    - 3.0.24
     compatible:
     - 3.0.18
-    verified: 3.0.18
+    - 3.0.20
+    - 3.0.21
+    - 3.0.22
+    - 3.0.24
+    verified: 3.0.24
   dependencies:
   - name: com.unity.ext.nunit
     version: 1.0.6
@@ -439,9 +456,11 @@ m_ResolvedPackages:
     - 2.0.15
     - 2.0.16
     - 2.0.17
+    - 2.0.18
     compatible:
     - 2.0.17
-    verified: 2.0.17
+    - 2.0.18
+    verified: 2.0.18
   dependencies:
   - name: com.unity.test-framework
     version: 1.1.9
@@ -597,10 +616,12 @@ m_ResolvedPackages:
     - 1.4.4
     - 1.5.0
     - 1.5.1
+    - 1.6.1
     compatible:
     - 1.4.4
     - 1.5.0
     - 1.5.1
+    - 1.6.1
     verified: 1.4.4
   dependencies:
   - name: com.unity.modules.uielements
@@ -935,6 +956,8 @@ m_ResolvedPackages:
     - 1.3.2
     - 1.3.3
     - 1.3.4
+    - 1.3.5
+    - 1.3.7
     - 2.0.1-exp.1
     - 2.0.1-exp.2
     - 2.0.1-pre.12
@@ -947,6 +970,8 @@ m_ResolvedPackages:
     - 1.3.2
     - 1.3.3
     - 1.3.4
+    - 1.3.5
+    - 1.3.7
     - 2.0.1-exp.1
     - 2.0.1-exp.2
     - 2.0.1-pre.12
@@ -1248,6 +1273,7 @@ m_ResolvedPackages:
     - 1.6.2
     - 1.6.3
     - 1.6.4
+    - 1.6.5
     - 1.7.0-pre.1
     - 1.7.0-pre.2
     - 1.7.0
@@ -1255,11 +1281,15 @@ m_ResolvedPackages:
     - 1.7.2
     - 1.7.3
     - 1.7.4
+    - 1.7.5
     - 1.8.0
     - 1.8.1
     - 1.8.2
+    - 1.8.3
+    - 1.8.4
     compatible:
     - 1.6.4
+    - 1.6.5
     - 1.7.0-pre.1
     - 1.7.0-pre.2
     - 1.7.0
@@ -1267,10 +1297,13 @@ m_ResolvedPackages:
     - 1.7.2
     - 1.7.3
     - 1.7.4
+    - 1.7.5
     - 1.8.0
     - 1.8.1
     - 1.8.2
-    verified: 1.6.4
+    - 1.8.3
+    - 1.8.4
+    verified: 1.6.5
   dependencies:
   - name: com.unity.modules.director
     version: 1.0.0
@@ -1340,6 +1373,7 @@ m_ResolvedPackages:
   versions:
     all:
     - 1.0.0
+    - 3.0.0-exp.1
     compatible:
     - 1.0.0
     verified: 1.0.0
@@ -3268,10 +3302,12 @@ m_ResolvedPackages:
     - 1.0.6
     - 2.0.2
     - 2.0.3
+    - 2.0.4
     compatible:
     - 1.0.6
     - 2.0.2
     - 2.0.3
+    - 2.0.4
     verified: 1.0.6
   dependencies: []
   resolvedDependencies: []
@@ -3508,6 +3544,7 @@ m_ResolvedPackages:
     - 1.8.2
     - 1.8.3
     - 1.8.4
+    - 1.8.7
     compatible:
     - 1.6.6
     - 1.7.0-pre.1
@@ -3523,6 +3560,7 @@ m_ResolvedPackages:
     - 1.8.2
     - 1.8.3
     - 1.8.4
+    - 1.8.7
     verified: 1.6.6
   dependencies:
   - name: com.unity.mathematics

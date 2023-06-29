@@ -54,7 +54,7 @@ namespace Aircraft
 
     #region MLAGENT METHODS
 
-    public override void Initialize()
+        public override void Initialize()
         {
             _area = GetComponentInParent<AircraftArea>();
             _rb = GetComponent<Rigidbody>();
