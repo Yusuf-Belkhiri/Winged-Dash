@@ -9,7 +9,7 @@ public class AircraftPlayer : AircraftAgent
     [SerializeField] private InputAction _pitchInput;
     [SerializeField] private InputAction _yawInput;
     [SerializeField] private InputAction _boostInput;
-    [SerializeField] private InputAction _pauseInput;
+    [SerializeField] public InputAction _pauseInput;
 
 
     public override void Initialize()

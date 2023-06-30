@@ -160,7 +160,7 @@ namespace Aircraft
         }
 
         // Prevent the agent from moving and taking actions
-        private void FreezeAgent()
+        public void FreezeAgent()
         {
             Debug.Assert(!_area._trainingMode, "Freeze/Thaw is not supported in training");
             _frozen = true;
@@ -169,7 +169,7 @@ namespace Aircraft
         }
 
         // != FreezeAgent, Resume the agent movement and actions 
-        private void ThawAgent()
+        public void ThawAgent()
         {
             Debug.Assert(!_area._trainingMode, "Freeze/Thraw is not supported in training");
             _frozen = false;
