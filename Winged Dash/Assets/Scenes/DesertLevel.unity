@@ -472,6 +472,59 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+--- !u!1 &645310304
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 645310306}
+  - component: {fileID: 645310305}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!50 &645310305
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 645310304}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!4 &645310306
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 645310304}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 40.32019, y: 411.82635, z: -110.99304}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -645,6 +698,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1794741154}
   - component: {fileID: 1794741153}
+  - component: {fileID: 1794741155}
   m_Layer: 0
   m_Name: RaceManager
   m_TagString: Untagged
@@ -664,8 +718,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c800584792757f947b9b0df3c4f449fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _aircraftArea: {fileID: 0}
+  _virtualCamera: {fileID: 0}
   _numLaps: 2
-  checkpointBonusTime: 15
   _difficultyModels:
   - _difficulty: 0
     _model: {fileID: 5022602860645237092, guid: 3f79d70875134e746bd569e0f3ba9bcd,
@@ -673,6 +728,12 @@ MonoBehaviour:
   - _difficulty: 1
     _model: {fileID: 5022602860645237092, guid: 08fd8727d4b586f4e87406a5547a915b,
       type: 3}
+  _countdownUI: {fileID: 0}
+  _pauseMenu: {fileID: 0}
+  uiController: {fileID: 0}
+  _gameOverUI: {fileID: 0}
+  checkpointBonusTime: 15
+  _orderPlaceUpdateCooldown: 0.5
 --- !u!4 &1794741154
 Transform:
   m_ObjectHideFlags: 0
@@ -688,6 +749,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1794741155
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794741152}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1968268711
 GameObject:
   m_ObjectHideFlags: 3
