@@ -142,6 +142,7 @@ namespace Aircraft
         // Called to get the distance between the agent & the next checkpoint
         private Vector3 VectorToNextCheckpoint()
         {
+            Debug.Assert(_area.Checkpoints != null, "HH null");
             var nextCheckpointDir = _area.Checkpoints[NextCheckpointIndex].position - transform.position;
             var localCheckpointDir = transform.InverseTransformDirection(nextCheckpointDir);        // get the local direction (this return is used as observation as well)
             return localCheckpointDir;

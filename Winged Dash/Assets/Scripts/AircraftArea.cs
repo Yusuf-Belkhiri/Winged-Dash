@@ -8,13 +8,13 @@ namespace Aircraft
 {
     public class AircraftArea : MonoBehaviour
     {
-
+        
     #region FIELDS
         [Tooltip("The path the race will take")] [SerializeField] private CinemachineSmoothPath _racePath;
         [SerializeField] private Transform _checkpointPrefab;
         [SerializeField] private Transform _finishCheckpointPrefab;
         public bool _trainingMode;        // To change the state, if true: enable training mode
-            
+
         public List<AircraftAgent> AircraftAgents { get; private set; }
         public List<Transform> Checkpoints { get; private set; }
 
@@ -27,11 +27,8 @@ namespace Aircraft
         {
             AircraftAgents = GetComponentsInChildren<AircraftAgent>().ToList();
             Debug.Assert(AircraftAgents.Count > 0, "No AirCraftAgents found");
-        }
-
-        // Init Checkpoint at the cinemachine path units (waypoints)
-        private void Start()
-        {
+            
+            // Those were in Start()
             Debug.Assert(_racePath != null, "Race path was not set");
             int numCheckpoints = _racePath.m_Waypoints.Length;
             //int numCheckpoints = (int)_racePath.MaxUnit(CinemachinePathBase.PositionUnits.PathUnits);
@@ -48,6 +45,12 @@ namespace Aircraft
                 Checkpoints.Add(checkpoint);
             }
         }
+
+        // Init Checkpoint at the cinemachine path units (waypoints)
+        /*private void Start()
+        {
+            
+        }*/
 
         // Reset the given aircraft agent to its previous checkpoint pos, unless if randomize: pick a random NextCheckpoint => random previousCheckpoint
         public void ResetAgentPosition(AircraftAgent agent, bool randomize = false)
@@ -68,6 +71,8 @@ namespace Aircraft
             Vector3 worldSpaceStartPos = _racePath.EvaluatePosition(pathStartPos);      // the corresponding world position (convert the pos of the race path to a pos on 3d space)
             Quaternion worldSpaceOrientation = _racePath.EvaluateOrientation(pathStartPos);
 
+            AircraftAgents ??= GetComponentsInChildren<AircraftAgent>().ToList();       // Fix bug
+            
             float horizontalPosOffset = (AircraftAgents.IndexOf(agent) - AircraftAgents.Count / 2) * Random.Range(8, 11);      // Random.Range(9, 10) is used to avoid repeating the same position in RL training 
 
             agent.transform.position =
