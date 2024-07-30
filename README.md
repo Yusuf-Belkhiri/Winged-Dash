@@ -1,2 +1,2 @@
 # Winged-Dash
- 3D aircraft race with MLAgents package
+3D aircraft racing prototype, using ML-agents toolkit
